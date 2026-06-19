@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Step Aura</title>
+  <meta name="description" content="Get in touch with the Step Aura team." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="aura-bg">
+    <div class="aura-orb aura-orb-1"></div>
+    <div class="aura-orb aura-orb-2"></div>
+    <div class="aura-orb aura-orb-3"></div>
+    <div class="aura-orb aura-orb-4"></div>
+    <div class="aurora-band aurora-band-1"></div>
+    <div class="aurora-band aurora-band-2"></div>
+    <div class="aurora-band aurora-band-3"></div>
+    <canvas id="aura-canvas"></canvas>
+    <div id="aura-grain"></div>
+  </div>
+
+  <div id="navbar-mount"></div>
+
+  <header class="page-head">
+    <div class="container">
+      <div class="uppercase-label">Contact</div>
+      <h1>Let's talk</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="contact-grid">
+      <div class="contact-info">
+        <h3>Reach us</h3>
+        <div class="row">
+          <div class="ico-circle">📍</div>
+          <div>
+            <strong>Lahore Flagship</strong><br/>
+            <span class="muted">Boulevard Mall, Lahore, Pakistan</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ico-circle">📍</div>
+          <div>
+            <strong>Sargodha Branch</strong><br/>
+            <span class="muted">University Road, Sargodha, Punjab, Pakistan</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ico-circle">📞</div>
+          <div><strong>Phone</strong><br/><span class="muted">+92 300 1234567</span></div>
+        </div>
+        <div class="row">
+          <div class="ico-circle">✉️</div>
+          <div><strong>Email</strong><br/><span class="muted">hello@stepaura.pk</span></div>
+        </div>
+        <div class="row">
+          <div class="ico-circle">🕐</div>
+          <div><strong>Hours</strong><br/><span class="muted">Mon - Sat · 11am - 9pm</span></div>
+        </div>
+      </div>
+
+      <form class="form-card" style="margin:0; max-width:none;" onsubmit="event.preventDefault(); showToast('Message sent. We\'ll be in touch soon.'); this.reset();">
+        <h2>Send a message</h2>
+        <p class="sub">We usually reply within 24 hours.</p>
+        <div class="field"><label>Name</label><input required type="text" placeholder="Your name" /></div>
+        <div class="field"><label>Email</label><input required type="email" placeholder="you@email.com" /></div>
+        <div class="field">
+          <label>Message <span id="msg-count" style="float:right; font-size:12px; color:var(--muted);">0 / 250</span></label>
+          <textarea required rows="4" placeholder="How can we help?" maxlength="250" id="msgBox" oninput="document.getElementById('msg-count').textContent=this.value.length+' / 250'"></textarea>
+        </div>
+        <button type="submit" class="btn btn-accent btn-block">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <div id="footer-mount"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>mountShell("contact");</script>
+  <script src="js/aura-bg.js"></script>
+</body>
+</html>

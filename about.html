@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Step Aura</title>
+  <meta name="description" content="The story behind Step Aura — premium shoes crafted with obsession." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="aura-bg">
+    <div class="aura-orb aura-orb-1"></div>
+    <div class="aura-orb aura-orb-2"></div>
+    <div class="aura-orb aura-orb-3"></div>
+    <div class="aura-orb aura-orb-4"></div>
+    <div class="aurora-band aurora-band-1"></div>
+    <div class="aurora-band aurora-band-2"></div>
+    <div class="aurora-band aurora-band-3"></div>
+    <canvas id="aura-canvas"></canvas>
+    <div id="aura-grain"></div>
+  </div>
+
+  <div id="navbar-mount"></div>
+
+  <header class="page-head">
+    <div class="container">
+      <div class="uppercase-label">Our Story</div>
+      <h1>Crafted with <span class="text-gradient">obsession</span></h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="about-grid">
+      <img src="images/cat-women.jpg" alt="Step Aura craftsmanship" loading="lazy" />
+      <div>
+        <div class="uppercase-label">Who we are</div>
+        <h2 class="font-display" style="font-size:40px; margin-top:8px;">Step Aura was born in Pakistan with a global vision.</h2>
+        <p class="muted" style="margin-top:16px; font-size:17px;">We started with a simple belief — that the right pair of shoes can change how you move through the world. Every Step Aura silhouette is designed in-house, prototyped by hand, and finished with the kind of detail you'd expect from a luxury house — at a price that respects your wallet.</p>
+        <p class="muted" style="margin-top:12px; font-size:17px;">From sneakers to stilettos, we make footwear for the way you actually live.</p>
+      </div>
+    </section>
+
+    <section class="values">
+      <div class="benefit"><div class="ico">🎯</div><h3>Quality first</h3><p>Premium leathers, performance foams, and craftsmanship that lasts.</p></div>
+      <div class="benefit"><div class="ico">💜</div><h3>Designed in-house</h3><p>Every silhouette is sketched and prototyped by our own design team.</p></div>
+      <div class="benefit"><div class="ico">🌍</div><h3>Made for Pakistan</h3><p>Sized, priced, and delivered for our home market — proudly.</p></div>
+    </section>
+  </main>
+
+  <div id="footer-mount"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>mountShell("about");</script>
+  <script src="js/aura-bg.js"></script>
+</body>
+</html>

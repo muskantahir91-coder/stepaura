@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In / Sign Up — Step Aura</title>
+  <meta name="description" content="Sign in or create your Step Aura account to place orders." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+  <div id="aura-bg"><div class="aura-orb aura-orb-1"></div><div class="aura-orb aura-orb-2"></div><div class="aura-orb aura-orb-3"></div><div class="aura-orb aura-orb-4"></div><div class="aurora-band aurora-band-1"></div><div class="aurora-band aurora-band-2"></div><div class="aurora-band aurora-band-3"></div><canvas id="aura-canvas"></canvas><div id="aura-grain"></div></div>
+  <div id="navbar-mount"></div>
+
+  <main class="auth-page-wrap">
+    <!-- Left brand panel -->
+    <div class="auth-brand-panel">
+      <div class="auth-orb auth-orb-a"></div>
+      <div class="auth-orb auth-orb-b"></div>
+      <div class="auth-brand-logo">Step <span>Aura</span></div>
+      <h2 class="auth-brand-tagline">Walk in.<br>Step up.<br>Stand out.</h2>
+      <p class="auth-brand-sub">Join thousands of style-forward shoppers across Pakistan. Premium shoes, delivered to your door.</p>
+      <div class="auth-brand-features">
+        <div class="auth-feature-row">
+          <div class="auth-feature-icon">🚚</div>
+          <span>Free delivery on orders over Rs. 3,000</span>
+        </div>
+        <div class="auth-feature-row">
+          <div class="auth-feature-icon">↩️</div>
+          <span>Easy 30-day hassle-free returns</span>
+        </div>
+        <div class="auth-feature-row">
+          <div class="auth-feature-icon">🔒</div>
+          <span>100% secure checkout</span>
+        </div>
+        <div class="auth-feature-row">
+          <div class="auth-feature-icon">⭐</div>
+          <span>50,000+ happy customers, 4.9 stars</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="auth-form-panel">
+      <div class="auth-form-inner">
+        <div class="auth-mobile-logo">Step <span>Aura</span></div>
+
+        <!-- Tab switcher -->
+        <div class="auth-tab-row">
+          <button id="tabSignin" class="auth-tab-btn active">Sign In</button>
+          <button id="tabSignup" class="auth-tab-btn">Create Account</button>
+        </div>
+
+        <!-- SIGN IN FORM -->
+        <div id="signinForm">
+          <div class="auth-form-header">
+            <h2>Welcome back</h2>
+            <p>Good to see you again. Sign in to continue.</p>
+          </div>
+          <form id="signinFormEl">
+            <div class="auth-field">
+              <label>Email Address</label>
+              <input required type="email" name="email" placeholder="you@email.com" />
+            </div>
+            <div class="auth-field">
+              <label>Password</label>
+              <input required type="password" name="password" placeholder="••••••••" />
+            </div>
+            <button type="submit" class="auth-btn-submit">Sign In →</button>
+          </form>
+          <p class="auth-form-link">New to Step Aura? <a href="#" onclick="switchTab('signup'); return false;">Create a free account</a></p>
+        </div>
+
+        <!-- SIGN UP FORM -->
+        <div id="signupForm" style="display:none;">
+          <div class="auth-form-header">
+            <h2>Create your account</h2>
+            <p>Fill in your details to start shopping.</p>
+          </div>
+          <form id="signupFormEl">
+            <div class="auth-field">
+              <label>Full Name</label>
+              <input required type="text" name="name" placeholder="Your full name" />
+            </div>
+            <div class="auth-field">
+              <label>Email Address</label>
+              <input required type="email" name="email" placeholder="you@email.com" />
+            </div>
+            <div class="auth-field">
+              <label>Phone Number</label>
+              <input required type="tel" name="phone" placeholder="+92 300 1234567" />
+            </div>
+            <div class="auth-field">
+              <label>Delivery Address</label>
+              <textarea required rows="2" name="address" placeholder="Street, City"></textarea>
+            </div>
+            <div class="auth-field">
+              <label>Password</label>
+              <input required type="password" id="signupPassword" name="password" placeholder="Create a strong password" />
+              <div class="pw-rules-grid">
+                <div class="pw-rule-item" id="rule-len">✗ 8+ characters</div>
+                <div class="pw-rule-item" id="rule-upper">✗ Uppercase letter</div>
+                <div class="pw-rule-item" id="rule-lower">✗ Lowercase letter</div>
+                <div class="pw-rule-item" id="rule-num">✗ Number</div>
+                <div class="pw-rule-item" id="rule-special">✗ Special character</div>
+              </div>
+            </div>
+            <!-- Math CAPTCHA -->
+            <div class="auth-captcha">
+              <div class="auth-captcha-label">🤖 Security Check</div>
+              <div id="captchaQuestion" class="auth-captcha-q"></div>
+              <input type="number" id="captchaAnswer" placeholder="Type your answer" />
+              <div id="captchaError" class="auth-captcha-error">❌ Wrong answer, try again!</div>
+            </div>
+            <button type="submit" class="auth-btn-submit">Create Account →</button>
+          </form>
+
+          <!-- OTP VERIFICATION STEP (hidden initially) -->
+          <div id="otpStep" style="display:none;">
+            <div class="auth-form-header" style="margin-top:0;">
+              <h2>Verify Your Email</h2>
+              <p id="otpSubtext">We've sent a 6-digit code to your email.</p>
+            </div>
+            <div class="auth-field">
+              <label>Enter OTP</label>
+              <input type="text" id="otpInput" maxlength="6" placeholder="6-digit code" autocomplete="one-time-code" style="letter-spacing:0.3em;font-size:1.3rem;text-align:center;" />
+              <div id="otpError" style="color:#ef4444;font-size:0.82rem;margin-top:6px;display:none;">❌ Galat OTP hai, dobara try karo</div>
+            </div>
+            <button id="otpVerifyBtn" class="auth-btn-submit">Verify & Create Account →</button>
+            <p style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--text-muted,#888);">
+              Code nahi mila? <a href="#" id="otpResendBtn" style="color:var(--accent,#a78bfa);">Resend</a>
+              <span id="otpTimer" style="color:var(--text-muted,#888);"></span>
+            </p>
+          </div>
+          <p class="auth-form-link">Already have an account? <a href="#" onclick="switchTab('signin'); return false;">Sign in</a></p>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-mount"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    mountShell("");
+
+    // ── Tab switching ─────────────────────────────────────────
+    const tabSignin = document.getElementById("tabSignin");
+    const tabSignup = document.getElementById("tabSignup");
+    const paneSignin = document.getElementById("signinForm");
+    const paneSignup = document.getElementById("signupForm");
+
+    function switchTab(which) {
+      const isSignin = which === "signin";
+      tabSignin.classList.toggle("active", isSignin);
+      tabSignup.classList.toggle("active", !isSignin);
+      paneSignin.style.display = isSignin ? "block" : "none";
+      paneSignup.style.display = isSignin ? "none" : "block";
+      if (!isSignin) generateCaptcha();
+    }
+    tabSignin.addEventListener("click", () => switchTab("signin"));
+    tabSignup.addEventListener("click", () => switchTab("signup"));
+
+    // ── Password strength rules ──────────────────────────────
+    const pwInput = document.getElementById("signupPassword");
+    const rules = {
+      "rule-len":     pw => pw.length >= 8,
+      "rule-upper":   pw => /[A-Z]/.test(pw),
+      "rule-lower":   pw => /[a-z]/.test(pw),
+      "rule-num":     pw => /[0-9]/.test(pw),
+      "rule-special": pw => /[^A-Za-z0-9]/.test(pw),
+    };
+    const ruleLabels = {
+      "rule-len":     "8+ characters",
+      "rule-upper":   "Uppercase letter",
+      "rule-lower":   "Lowercase letter",
+      "rule-num":     "Number",
+      "rule-special": "Special character",
+    };
+    pwInput.addEventListener("input", () => {
+      const pw = pwInput.value;
+      for (const [id, fn] of Object.entries(rules)) {
+        const el = document.getElementById(id);
+        const ok = fn(pw);
+        el.textContent = (ok ? "✓ " : "✗ ") + ruleLabels[id];
+        el.classList.toggle("ok", ok);
+      }
+    });
+    function isPasswordValid(pw) {
+      return Object.values(rules).every(fn => fn(pw));
+    }
+
+    // ── Math CAPTCHA ─────────────────────────────────────────
+    let captchaResult = 0;
+    function generateCaptcha() {
+      const ops = ["+", "-", "×"];
+      const op = ops[Math.floor(Math.random() * ops.length)];
+      let a, b;
+      if (op === "+") { a = Math.floor(Math.random()*50)+5; b = Math.floor(Math.random()*50)+5; captchaResult = a+b; }
+      else if (op === "-") { a = Math.floor(Math.random()*50)+20; b = Math.floor(Math.random()*20)+1; captchaResult = a-b; }
+      else { a = Math.floor(Math.random()*10)+2; b = Math.floor(Math.random()*10)+2; captchaResult = a*b; }
+      document.getElementById("captchaQuestion").textContent = `What is ${a} ${op} ${b}?`;
+      document.getElementById("captchaAnswer").value = "";
+      document.getElementById("captchaError").style.display = "none";
+    }
+    generateCaptcha();
+
+    const API = "https://YOUR-BACKEND-NAME.up.railway.app/api/auth.php";
+
+    // ── EmailJS init ──────────────────────────────────────────
+    emailjs.init("sHebwY-B5R8yXCqn1");
+
+    // ── OTP state ─────────────────────────────────────────────
+    let pendingOtp = "";
+    let pendingFormData = null;
+    let otpTimerInterval = null;
+
+    function generateOtp() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    function startOtpTimer(seconds) {
+      const resendBtn = document.getElementById("otpResendBtn");
+      const timerEl  = document.getElementById("otpTimer");
+      resendBtn.style.pointerEvents = "none";
+      resendBtn.style.opacity = "0.4";
+      let remaining = seconds;
+      timerEl.textContent = ` (${remaining}s)`;
+      clearInterval(otpTimerInterval);
+      otpTimerInterval = setInterval(() => {
+        remaining--;
+        timerEl.textContent = remaining > 0 ? ` (${remaining}s)` : "";
+        if (remaining <= 0) {
+          clearInterval(otpTimerInterval);
+          resendBtn.style.pointerEvents = "";
+          resendBtn.style.opacity = "1";
+        }
+      }, 1000);
+    }
+
+    async function sendOtpEmail(email, name, otp) {
+      return emailjs.send("service_t2wyn47", "template_w5xwvma", {
+        to_email: email,
+        to_name:  name,
+        otp_code: otp,
+      });
+    }
+
+    // ── Sign Up submit (step 1: validate → send OTP) ──────────
+    document.getElementById("signupFormEl").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const pw = pwInput.value;
+      if (!isPasswordValid(pw)) { showToast("Please meet all password requirements"); return; }
+      const ans = parseInt(document.getElementById("captchaAnswer").value, 10);
+      if (ans !== captchaResult) {
+        document.getElementById("captchaError").style.display = "block";
+        generateCaptcha(); return;
+      }
+
+      const fd = new FormData(document.getElementById("signupFormEl"));
+      const submitBtn = document.querySelector("#signupFormEl .auth-btn-submit");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending OTP...";
+
+      // Generate & send OTP
+      pendingOtp = generateOtp();
+      pendingFormData = {
+        name: fd.get("name"), email: fd.get("email"),
+        password: fd.get("password"), phone: fd.get("phone"), address: fd.get("address")
+      };
+
+      try {
+        await sendOtpEmail(pendingFormData.email, pendingFormData.name, pendingOtp);
+        showToast("OTP bhej diya! Email check karo 📧");
+        // Show OTP step, hide form
+        document.getElementById("signupFormEl").style.display = "none";
+        document.getElementById("otpStep").style.display = "block";
+        document.getElementById("otpSubtext").textContent =
+          `We've sent a 6-digit code to ${pendingFormData.email}`;
+        document.getElementById("otpInput").value = "";
+        document.getElementById("otpError").style.display = "none";
+        startOtpTimer(60);
+      } catch (err) {
+        showToast("Email bhejne mein masla hua, dobara koshish karo");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Account →";
+      }
+    });
+
+    // ── OTP Resend ────────────────────────────────────────────
+    document.getElementById("otpResendBtn").addEventListener("click", async (e) => {
+      e.preventDefault();
+      if (!pendingFormData) return;
+      pendingOtp = generateOtp();
+      try {
+        await sendOtpEmail(pendingFormData.email, pendingFormData.name, pendingOtp);
+        showToast("Naya OTP bhej diya! 📧");
+        document.getElementById("otpError").style.display = "none";
+        startOtpTimer(60);
+      } catch {
+        showToast("Email bhejne mein masla hua");
+      }
+    });
+
+    // ── OTP Verify (step 2: verify → register account) ────────
+    document.getElementById("otpVerifyBtn").addEventListener("click", async () => {
+      const entered = document.getElementById("otpInput").value.trim();
+      if (entered !== pendingOtp) {
+        document.getElementById("otpError").style.display = "block";
+        document.getElementById("otpInput").value = "";
+        return;
+      }
+      document.getElementById("otpError").style.display = "none";
+      const verifyBtn = document.getElementById("otpVerifyBtn");
+      verifyBtn.disabled = true;
+      verifyBtn.textContent = "Creating account...";
+
+      try {
+        const res = await fetch(API + "?action=register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(pendingFormData)
+        });
+        const data = await res.json();
+        if (data.success) {
+          Auth.set({ db_id: data.user_id, name: pendingFormData.name, email: pendingFormData.email,
+                     phone: pendingFormData.phone, address: pendingFormData.address });
+          showToast("Account ban gaya! Step Aura mein khush aamdeed 🎉");
+          const next = new URLSearchParams(location.search).get("next") || "index.html";
+          setTimeout(() => location.href = next, 800);
+        } else {
+          showToast(data.error || "Registration fail hua");
+          verifyBtn.disabled = false;
+          verifyBtn.textContent = "Verify & Create Account →";
+        }
+      } catch {
+        // Offline fallback
+        Auth.set({ name: pendingFormData.name, email: pendingFormData.email,
+                   phone: pendingFormData.phone, address: pendingFormData.address });
+        showToast("Account created! Welcome to Step Aura 🎉");
+        const next = new URLSearchParams(location.search).get("next") || "index.html";
+        setTimeout(() => location.href = next, 800);
+      }
+    });
+
+    // ── Sign In submit ────────────────────────────────────────
+    document.getElementById("signinFormEl").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(document.getElementById("signinFormEl"));
+      const submitBtn = document.querySelector("#signinFormEl .auth-btn-submit");
+      submitBtn.disabled = true; submitBtn.textContent = "Signing in...";
+
+      try {
+        const res = await fetch(API + "?action=login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: fd.get("email"), password: fd.get("password") })
+        });
+        const data = await res.json();
+        if (data.success) {
+          Auth.set({ db_id: data.user_id, name: data.name, email: data.email, phone: "", address: "" });
+          showToast("Sign in ho gaya! Khush aamdeed 👋");
+          const next = new URLSearchParams(location.search).get("next") || "index.html";
+          setTimeout(() => location.href = next, 600);
+        } else {
+          showToast(data.error || "Galat email ya password");
+          submitBtn.disabled = false; submitBtn.textContent = "Sign In →";
+        }
+      } catch {
+        // Offline fallback
+        Auth.set({ name: fd.get("email").split("@")[0], email: fd.get("email"), phone: "", address: "" });
+        showToast("Signed in! Welcome back 👋");
+        const next = new URLSearchParams(location.search).get("next") || "index.html";
+        setTimeout(() => location.href = next, 600);
+      }
+    });
+
+    if (new URLSearchParams(location.search).get("tab") === "signup") switchTab("signup");
+  </script>
+  <script src="js/aura-bg.js"></script>
+</body>
+</html>

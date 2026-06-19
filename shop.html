@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop All — Step Aura</title>
+  <meta name="description" content="Browse all premium shoes from Step Aura. Filter by category and sort by price." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="aura-bg">
+    <div class="aura-orb aura-orb-1"></div>
+    <div class="aura-orb aura-orb-2"></div>
+    <div class="aura-orb aura-orb-3"></div>
+    <div class="aura-orb aura-orb-4"></div>
+    <div class="aurora-band aurora-band-1"></div>
+    <div class="aurora-band aurora-band-2"></div>
+    <div class="aurora-band aurora-band-3"></div>
+    <canvas id="aura-canvas"></canvas>
+    <div id="aura-grain"></div>
+  </div>
+
+  <div id="navbar-mount"></div>
+
+  <header class="page-head">
+    <div class="container">
+      <div class="uppercase-label">All Products</div>
+      <h1>Shop the collection</h1>
+    </div>
+  </header>
+
+  <main class="container shop-layout">
+    <aside class="filters">
+      <h4>Category</h4>
+      <div class="filter-group" id="catFilters">
+        <label><input type="checkbox" value="men" checked /> Men</label>
+        <label><input type="checkbox" value="women" checked /> Women</label>
+        <label><input type="checkbox" value="kids" checked /> Kids</label>
+      </div>
+      <h4>Price</h4>
+      <div class="filter-group" id="priceFilters">
+        <label><input type="radio" name="price" value="all" checked /> All</label>
+        <label><input type="radio" name="price" value="0-3000" /> Under Rs. 3,000</label>
+        <label><input type="radio" name="price" value="3000-6000" /> Rs. 3,000 - 6,000</label>
+        <label><input type="radio" name="price" value="6000-99999" /> Above Rs. 6,000</label>
+      </div>
+    </aside>
+    <div>
+      <div class="shop-toolbar">
+        <div id="resultCount" class="muted"></div>
+        <select id="sortSelect">
+          <option value="featured">Featured</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+          <option value="name">Name (A-Z)</option>
+        </select>
+      </div>
+      <div class="products-grid" id="productGrid"></div>
+    </div>
+  </main>
+
+  <div id="footer-mount"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    mountShell("shop");
+    const grid = document.getElementById("productGrid");
+    const count = document.getElementById("resultCount");
+
+    function getFilters() {
+      const cats = [...document.querySelectorAll("#catFilters input:checked")].map(i => i.value);
+      const price = document.querySelector("#priceFilters input:checked").value;
+      const sort = document.getElementById("sortSelect").value;
+      return { cats, price, sort };
+    }
+    function render() {
+      const { cats, price, sort } = getFilters();
+      let list = PRODUCTS.filter(p => cats.includes(p.category));
+      if (price !== "all") {
+        const [lo, hi] = price.split("-").map(Number);
+        list = list.filter(p => p.price >= lo && p.price <= hi);
+      }
+      if (sort === "low") list.sort((a, b) => a.price - b.price);
+      else if (sort === "high") list.sort((a, b) => b.price - a.price);
+      else if (sort === "name") list.sort((a, b) => a.name.localeCompare(b.name));
+      count.textContent = `${list.length} product${list.length !== 1 ? "s" : ""}`;
+      grid.innerHTML = list.length
+        ? list.map(productCardHTML).join("")
+        : `<div class="empty-state" style="grid-column:1/-1;">No products match your filters.</div>`;
+    }
+    document.querySelectorAll("#catFilters input, #priceFilters input").forEach(i => i.addEventListener("change", render));
+    document.getElementById("sortSelect").addEventListener("change", render);
+    render();
+  </script>
+  <script src="js/aura-bg.js"></script>
+</body>
+</html>

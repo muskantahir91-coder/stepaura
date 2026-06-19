@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Step Aura — Step Into Style</title>
+  <meta name="description" content="Premium shoes for men, women and kids. Free delivery, easy returns and secure payments across Pakistan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- AURA ANIMATED BACKGROUND -->
+  <div id="aura-bg">
+    <div class="aura-orb aura-orb-1"></div>
+    <div class="aura-orb aura-orb-2"></div>
+    <div class="aura-orb aura-orb-3"></div>
+    <div class="aura-orb aura-orb-4"></div>
+    <div class="aurora-band aurora-band-1"></div>
+    <div class="aurora-band aurora-band-2"></div>
+    <div class="aurora-band aurora-band-3"></div>
+    <canvas id="aura-canvas"></canvas>
+    <div id="aura-grain"></div>
+  </div>
+
+  <!-- FLOATING SHOE IMAGES IN BACKGROUND -->
+  <div id="floatingShoes" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-9;pointer-events:none;overflow:hidden;"></div>
+
+  <div id="navbar-mount"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb" id="heroOrb"></div>
+    <div class="container hero-grid">
+      <div class="fade-up">
+        <div class="badge-pill">✨ <span>New Drop · Spring/Summer Collection</span></div>
+        <h1>Step Into Style with <span class="text-gradient">Step Aura</span></h1>
+        <p>Premium shoes designed for the way you move. Crafted with obsession, finished by hand, and built to walk wherever life takes you.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="shop.html">Shop Collection →</a>
+          <a class="btn btn-outline" href="categories.html">Explore Categories</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="num">50K+</div>
+            <div class="label">Happy customers</div>
+          </div>
+          <div class="divider-v"></div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="label">4.9 average rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="fade-up delay-2">
+        <div class="hero-visual">
+          <div class="disc"></div>
+          <img src="images/hero-shoe.jpg" alt="Step Aura premium sneaker" />
+          <div class="glass-card left">
+            <div class="lbl">Aura Glide</div>
+            <div class="val">Rs. 4,999</div>
+          </div>
+          <div class="glass-card right">
+            <div class="lbl">★ 4.9</div>
+            <div class="val" style="font-size:13px;">12.4k reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+
+  <!-- BENEFITS -->
+  <section class="section">
+    <div class="container">
+      <div class="benefits-grid">
+        <div class="benefit fade-up"><div class="ico">🚚</div><h3>Free Delivery</h3><p>On every order, anywhere in Pakistan.</p></div>
+        <div class="benefit fade-up delay-1"><div class="ico">↩️</div><h3>Easy Returns</h3><p>7-day no-questions-asked returns.</p></div>
+        <div class="benefit fade-up delay-2"><div class="ico">🛡️</div><h3>Secure Payment</h3><p>Encrypted, COD or card — your choice.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO -->
+  <section class="container">
+    <div class="promo-grid">
+      <a class="promo dark" href="shop.html">
+        <div class="promo-content">
+          <div class="lbl">Mega Sale</div>
+          <h3>Up to <span class="text-gradient">40% Off</span><br/>Sneaker Drop</h3>
+        </div>
+        <span class="pill">Shop Now →</span>
+      </a>
+      <a class="promo violet" href="categories.html">
+        <div class="promo-content">
+          <div class="lbl">Just Landed</div>
+          <h3>Women's Heels<br/>Spring Edit</h3>
+        </div>
+        <span class="pill" style="background:#fff; color:var(--primary); border-color:#fff;">Discover →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="uppercase-label">Featured</div>
+          <h2>Trending right now</h2>
+        </div>
+        <a class="see-all" href="shop.html">See all →</a>
+      </div>
+      <div class="products-grid" id="featuredGrid"></div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="container">
+    <div class="cat-grid">
+      <a class="cat-card" href="categories.html">
+        <img src="images/cat-men.jpg" alt="Men" loading="lazy" />
+        <div class="info"><div class="tag">Bold + refined</div><h3>Men <span>→</span></h3></div>
+      </a>
+      <a class="cat-card" href="categories.html">
+        <img src="images/cat-women.jpg" alt="Women" loading="lazy" />
+        <div class="info"><div class="tag">Elegant edits</div><h3>Women <span>→</span></h3></div>
+      </a>
+      <a class="cat-card" href="categories.html">
+        <img src="images/cat-kids.jpg" alt="Kids" loading="lazy" />
+        <div class="info"><div class="tag">Built for play</div><h3>Kids <span>→</span></h3></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:48px;">
+        <div class="uppercase-label">Loved by 50,000+</div>
+        <h2 class="font-display" style="font-size:clamp(32px,4vw,48px); margin-top:8px; font-weight:700;">Real people. Real glow.</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>"The Aura Glides are the comfiest sneakers I've owned in years. Worth every rupee."</p>
+          <div class="who"><div class="avatar">H</div><div><div class="name">Hira A.</div><div class="city">Lahore</div></div></div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>"Bought the Onyx Oxfords for a wedding. People kept asking where they're from."</p>
+          <div class="who"><div class="avatar">B</div><div><div class="name">Bilal R.</div><div class="city">Karachi</div></div></div>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>"Heels that I can actually walk in all night. Step Aura just gets it."</p>
+          <div class="who"><div class="avatar">S</div><div><div class="name">Sana M.</div><div class="city">Islamabad</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- STORE LOCATIONS -->
+  <section class="section" style="background:rgba(15,10,30,0.75);padding:72px 0;backdrop-filter:blur(2px);">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:48px;">
+        <div class="uppercase-label">Our Stores</div>
+        <h2 class="font-display" style="font-size:clamp(28px,4vw,44px);margin-top:8px;font-weight:700;">Visit Us In Person</h2>
+        <p class="muted" style="max-width:460px;margin:12px auto 0;font-size:15px;">Try before you buy — our staff will help you find your perfect pair.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;">
+
+        <!-- Lahore -->
+        <div style="background:rgba(20,15,40,0.82);backdrop-filter:blur(12px);border-radius:20px;padding:26px;box-shadow:0 2px 24px rgba(139,92,246,.2);border:1px solid rgba(139,92,246,.25);display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏬</div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#a78bfa;margin-bottom:3px;">Flagship Store</div>
+            <h4 style="font-size:16px;font-weight:700;color:#f5f5f7;margin:0 0 5px;">Lahore</h4>
+            <p style="font-size:13px;color:#9a9aa8;line-height:1.6;margin:0;">Boulevard Mall, Main Gulberg,<br/>Lahore, Punjab</p>
+            <p style="font-size:13px;color:#9a9aa8;margin:7px 0 2px;"><strong style="color:#c4b5fd;">📞</strong> +92 300 1234567</p>
+            <p style="font-size:13px;color:#9a9aa8;margin:0;"><strong style="color:#c4b5fd;">🕐</strong> Mon–Sat · 11am–9pm</p>
+            <span style="display:inline-block;margin-top:10px;padding:3px 12px;background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(110,231,183,.3);border-radius:20px;font-size:11px;font-weight:700;">● Open Now</span>
+          </div>
+        </div>
+
+        <!-- Sargodha — highlighted -->
+        <div style="background:rgba(30,15,55,0.85);backdrop-filter:blur(14px);border-radius:20px;padding:26px;box-shadow:0 4px 32px rgba(139,92,246,.4);border:2px solid rgba(139,92,246,.55);position:relative;overflow:hidden;">
+          <div style="position:absolute;top:14px;right:14px;background:linear-gradient(90deg,#8b5cf6,#6366f1);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.06em;">NOW OPEN</div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🏪</div>
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c4b5fd;margin-bottom:3px;">New Branch</div>
+              <h4 style="font-size:16px;font-weight:700;color:#f5f5f7;margin:0 0 5px;">Sargodha</h4>
+              <p style="font-size:13px;color:#9a9aa8;line-height:1.6;margin:0;">University Road, Near Satellite Town,<br/>Sargodha, Punjab</p>
+              <p style="font-size:13px;color:#9a9aa8;margin:7px 0 2px;"><strong style="color:#c4b5fd;">📞</strong> +92 300 9876543</p>
+              <p style="font-size:13px;color:#9a9aa8;margin:0;"><strong style="color:#c4b5fd;">🕐</strong> Mon–Sat · 11am–9pm</p>
+              <span style="display:inline-block;margin-top:10px;padding:3px 12px;background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(110,231,183,.3);border-radius:20px;font-size:11px;font-weight:700;">● Open Now</span>
+            </div>
+          </div>
+          <div style="margin-top:18px;border-radius:14px;overflow:hidden;border:2px solid rgba(139,92,246,.4);">
+            <iframe
+              src="https://www.openstreetmap.org/export/embed.html?bbox=72.6400%2C32.0650%2C72.6900%2C32.1050&layer=mapnik&marker=32.0836%2C72.6619"
+              width="100%" height="190" style="display:block;border:0;"
+              title="Sargodha Store Location">
+            </iframe>
+          </div>
+          <a href="https://www.google.com/maps/search/Satellite+Town+Sargodha+Punjab/@32.0836,72.6619,15z" target="_blank" rel="noopener"
+            style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;font-weight:600;color:#a78bfa;transition:opacity .2s;"
+            onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+            📍 Get Directions on Google Maps →
+          </a>
+        </div>
+
+        <!-- Islamabad -->
+        <div style="background:rgba(20,15,40,0.82);backdrop-filter:blur(12px);border-radius:20px;padding:26px;box-shadow:0 2px 24px rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.25);display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,#3b82f6,#60a5fa);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">🛍️</div>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd;margin-bottom:3px;">Premium Store</div>
+            <h4 style="font-size:16px;font-weight:700;color:#f5f5f7;margin:0 0 5px;">Islamabad</h4>
+            <p style="font-size:13px;color:#9a9aa8;line-height:1.6;margin:0;">Centaurus Mall, F-8,<br/>Islamabad</p>
+            <p style="font-size:13px;color:#9a9aa8;margin:7px 0 2px;"><strong style="color:#93c5fd;">📞</strong> +92 300 5554433</p>
+            <p style="font-size:13px;color:#9a9aa8;margin:0;"><strong style="color:#93c5fd;">🕐</strong> Mon–Sun · 12pm–10pm</p>
+            <span style="display:inline-block;margin-top:10px;padding:3px 12px;background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(110,231,183,.3);border-radius:20px;font-size:11px;font-weight:700;">● Open Now</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-mount"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    mountShell("home");
+    // Featured products
+    document.getElementById("featuredGrid").innerHTML =
+      PRODUCTS.slice(0, 8).map(productCardHTML).join("");
+    // Marquee
+    const items = ["Free Delivery in Pakistan", "Easy 7-Day Returns", "Secure Checkout", "Premium Materials", "Hand-finished", "Limited Drops"];
+    const dup = [...items, ...items, ...items];
+    document.getElementById("marqueeTrack").innerHTML =
+      dup.map(t => `<span>${t} <span class="dot">✦</span></span>`).join("");
+    // Hero orb parallax
+    const orb = document.getElementById("heroOrb");
+    window.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      orb.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  </script>
+
+  <!-- ===== BACKGROUND ANIMATION ===== -->
+  <style>
+    @keyframes floatShoeA {
+      0%   { transform: translateY(0)   rotate(-15deg) scale(0.9); opacity:0; }
+      7%   { opacity: 0.18; }
+      93%  { opacity: 0.18; }
+      100% { transform: translateY(-110vh) rotate(20deg)  scale(0.9); opacity:0; }
+    }
+    @keyframes floatShoeB {
+      0%   { transform: translateY(0)   rotate(12deg) scale(1.1); opacity:0; }
+      7%   { opacity: 0.14; }
+      93%  { opacity: 0.14; }
+      100% { transform: translateY(-110vh) rotate(-18deg) scale(1.1); opacity:0; }
+    }
+    @keyframes floatShoeC {
+      0%   { transform: translateY(0)   rotate(-5deg)  scale(0.8); opacity:0; }
+      7%   { opacity: 0.20; }
+      93%  { opacity: 0.20; }
+      100% { transform: translateY(-110vh) rotate(30deg)  scale(0.8); opacity:0; }
+    }
+    @keyframes floatShoeD {
+      0%   { transform: translateY(0)   rotate(22deg)  scale(1.0); opacity:0; }
+      7%   { opacity: 0.12; }
+      93%  { opacity: 0.12; }
+      100% { transform: translateY(-110vh) rotate(-10deg) scale(1.0); opacity:0; }
+    }
+    .bg-shoe {
+      position: absolute;
+      border-radius: 14px;
+      object-fit: cover;
+      pointer-events: none;
+      filter: brightness(0.25) saturate(0.5) blur(0.4px);
+    }
+  </style>
+  <script>
+    /* ---- Floating shoe images ---- */
+    window.addEventListener('DOMContentLoaded', function() {
+      const container = document.getElementById('floatingShoes');
+      if (!container) return;
+
+      const shoes = [
+        'images/shoe-1.jpg','images/shoe-2.jpg','images/shoe-3.jpg',
+        'images/shoe-4.jpg','images/shoe-5.jpg','images/shoe-6.jpg',
+        'images/shoe-7.jpg','images/shoe-8.jpg','images/shoe-9.jpg',
+        'images/hero-shoe.jpg','images/cat-men.jpg','images/cat-women.jpg'
+      ];
+      const anims = ['floatShoeA','floatShoeB','floatShoeC','floatShoeD'];
+      const COUNT = 20;
+
+      for (let i = 0; i < COUNT; i++) {
+        const img = document.createElement('img');
+        img.src  = shoes[i % shoes.length];
+        img.className = 'bg-shoe';
+        const size  = Math.round(70 + Math.random() * 130);
+        const left  = Math.round(Math.random() * 93);
+        const dur   = (16 + Math.random() * 20).toFixed(1);
+        const delay = -(Math.random() * parseFloat(dur)).toFixed(1);
+        const anim  = anims[i % anims.length];
+
+        img.style.width       = size + 'px';
+        img.style.height      = size + 'px';
+        img.style.left        = left + '%';
+        img.style.bottom      = '-' + size + 'px';
+        img.style.animation   = `${anim} ${dur}s linear ${delay}s infinite`;
+
+        container.appendChild(img);
+      }
+    });
+  </script>
+  <script src="js/aura-bg.js"></script>
+</body>
+</html>

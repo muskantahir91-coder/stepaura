@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categories — Step Aura</title>
+  <meta name="description" content="Shop Step Aura by category — Men, Women and Kids." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="aura-bg">
+    <div class="aura-orb aura-orb-1"></div>
+    <div class="aura-orb aura-orb-2"></div>
+    <div class="aura-orb aura-orb-3"></div>
+    <div class="aura-orb aura-orb-4"></div>
+    <div class="aurora-band aurora-band-1"></div>
+    <div class="aurora-band aurora-band-2"></div>
+    <div class="aurora-band aurora-band-3"></div>
+    <canvas id="aura-canvas"></canvas>
+    <div id="aura-grain"></div>
+  </div>
+
+  <div id="navbar-mount"></div>
+
+  <header class="page-head">
+    <div class="container">
+      <div class="uppercase-label">Categories</div>
+      <h1>Find your fit</h1>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 60px 0;">
+    <section class="cat-section">
+      <div class="img-wrap"><img src="images/cat-men.jpg" alt="Men" loading="lazy" /></div>
+      <div>
+        <div class="uppercase-label">Men's Collection</div>
+        <h2>Men</h2>
+        <p class="desc">Bold silhouettes, refined materials.</p>
+        <div class="subcat-tags">
+          <span>Sneakers</span><span>Formal Shoes</span><span>Sports Shoes</span><span>Sandals</span>
+        </div>
+        <a class="btn btn-primary" href="shop.html" style="margin-top:24px;">Shop Men →</a>
+      </div>
+    </section>
+
+    <section class="cat-section reverse">
+      <div class="img-wrap"><img src="images/cat-women.jpg" alt="Women" loading="lazy" /></div>
+      <div>
+        <div class="uppercase-label">Women's Collection</div>
+        <h2>Women</h2>
+        <p class="desc">Elegant heels, effortless flats.</p>
+        <div class="subcat-tags">
+          <span>Heels</span><span>Flats</span><span>Sandals</span><span>Sneakers</span>
+        </div>
+        <a class="btn btn-primary" href="shop.html" style="margin-top:24px;">Shop Women →</a>
+      </div>
+    </section>
+
+    <section class="cat-section">
+      <div class="img-wrap"><img src="images/cat-kids.jpg" alt="Kids" loading="lazy" /></div>
+      <div>
+        <div class="uppercase-label">Kids' Collection</div>
+        <h2>Kids</h2>
+        <p class="desc">Built tough for big adventures.</p>
+        <div class="subcat-tags">
+          <span>School Shoes</span><span>Casual Shoes</span><span>Sports Shoes</span>
+        </div>
+        <a class="btn btn-primary" href="shop.html" style="margin-top:24px;">Shop Kids →</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-mount"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>mountShell("categories");</script>
+  <script src="js/aura-bg.js"></script>
+</body>
+</html>
