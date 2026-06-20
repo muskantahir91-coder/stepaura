@@ -99,7 +99,7 @@ function renderNavbar(active = "") {
           <!-- Underline accent -->
           <rect x="7" y="31" width="26" height="2.2" rx="1.1" fill="white" opacity="0.3"/>
         </svg>
-        <span style="font-family:'Playfair Display',serif;font-size:21px;font-weight:800;letter-spacing:-0.01em;color:#0f0f14;">Step<span style="color:#8b5cf6;">Aura</span></span>
+        <span style="font-family:'Playfair Display',serif;font-size:21px;font-weight:800;letter-spacing:-0.01em;color:#8b5cf6;">Step<span style="color:#8b5cf6;">Aura</span></span>
       </a>
       <div class="nav-links" id="navLinks">
         ${user && user.isAdmin ? `<a href="admin.html" class="${active==='admin'?'active':''}" style="color:#8b5cf6;font-weight:700;">⚙ Admin</a>` : ''}
