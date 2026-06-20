@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders — Step Aura</title>
+  <meta name="description" content="Track and manage your Step Aura orders." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .order-card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 18px;
+    }
+    .order-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-status {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .status-pending  { background: rgba(245,158,11,0.15); color: #f59e0b; }
+    .status-processing { background: rgba(99,102,241,0.15); color: #818cf8; }
+    .status-shipped  { background: rgba(56,189,248,0.15); color: #38bdf8; }
+    .status-delivered { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .status-cancelled { background: rgba(239,68,68,0.15); color: #ef4444; }
+    .order-item-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 6px 0;
+      color: var(--text-muted, #9ca3af);
+    }
+    .order-item-row span:first-child { color: var(--text, inherit); }
+    .order-card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <!-- AURA ANIMATED BACKGROUND -->
+  <div id="aura-bg">
+    <div class="aura-orb aura-orb-1"></div>
+    <div class="aura-orb aura-orb-2"></div>
+    <div class="aura-orb aura-orb-3"></div>
+    <div class="aura-orb aura-orb-4"></div>
+    <div class="aurora-band aurora-band-1"></div>
+    <div class="aurora-band aurora-band-2"></div>
+    <div class="aurora-band aurora-band-3"></div>
+    <canvas id="aura-canvas"></canvas>
+    <div id="aura-grain"></div>
+  </div>
+
+  <div id="navbar-mount"></div>
+
+  <header class="page-head">
+    <div class="container">
+      <div class="uppercase-label">Order History</div>
+      <h1>My Orders</h1>
+    </div>
+  </header>
+
+  <main class="container" id="ordersMain" style="padding-bottom:60px;">
+    <!-- Filled by JS -->
+  </main>
+
+  <div id="footer-mount"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // ⚠️ Apna real Railway backend URL yahan daalo
+    const API_BASE = "https://stepaura-backend-production.up.railway.app";
+
+    mountShell("");
+
+    const main = document.getElementById("ordersMain");
+    const user = Auth.user();
+
+    function statusClass(status) {
+      const s = (status || "").toLowerCase();
+      if (["pending", "processing", "shipped", "delivered", "cancelled"].includes(s)) {
+        return "status-" + s;
+      }
+      return "status-pending";
+    }
+
+    function renderLoading() {
+      main.innerHTML = `
+        <div class="empty-state" style="padding:80px 20px;">
+          <div style="font-size:48px; margin-bottom:16px;">⏳</div>
+          <p class="muted">Aap ke orders load ho rahe hain...</p>
+        </div>`;
+    }
+
+    function renderSignInPrompt() {
+      main.innerHTML = `
+        <div class="empty-state" style="padding:80px 20px;">
+          <div style="font-size:64px; margin-bottom:16px;">🔒</div>
+          <h2 class="font-display" style="font-size:32px; margin-bottom:8px;">Sign in to view your orders</h2>
+          <p class="muted" style="margin-bottom:24px;">Apne orders dekhne ke liye pehle sign in karo.</p>
+          <a class="btn btn-accent" href="auth.html?next=my-orders.html">Sign In →</a>
+        </div>`;
+    }
+
+    function renderEmpty() {
+      main.innerHTML = `
+        <div class="empty-state" style="padding:80px 20px;">
+          <div style="font-size:64px; margin-bottom:16px;">📦</div>
+          <h2 class="font-display" style="font-size:32px; margin-bottom:8px;">Koi order nahi mila</h2>
+          <p class="muted" style="margin-bottom:24px;">Aap ne abhi tak koi order place nahi kiya.</p>
+          <a class="btn btn-primary" href="shop.html">Start Shopping →</a>
+        </div>`;
+    }
+
+    function renderError(msg) {
+      main.innerHTML = `
+        <div class="empty-state" style="padding:80px 20px;">
+          <div style="font-size:48px; margin-bottom:16px;">⚠️</div>
+          <h2 class="font-display" style="font-size:28px; margin-bottom:8px;">Kuch ghalat hogaya</h2>
+          <p class="muted" style="margin-bottom:24px;">${msg}</p>
+          <button class="btn btn-outline" onclick="loadOrders()">Dobara Try Karo</button>
+        </div>`;
+    }
+
+    function renderOrders(orders) {
+      if (!orders.length) { renderEmpty(); return; }
+
+      // Sabse latest order top par hota hai (backend already DESC order karta hai)
+      const latestOrderId = orders[0].id;
+
+      main.innerHTML = `
+        <div style="max-width:760px; margin:0 auto;">
+          ${orders.map(order => {
+            const isLatest = order.id === latestOrderId;
+            const cancellable = !["delivered", "cancelled"].includes((order.status || "").toLowerCase());
+
+            return `
+              <div class="order-card">
+                <div class="order-card-head">
+                  <div>
+                    <div style="font-weight:700; font-size:16px;">Order #${order.id}</div>
+                    <div class="muted" style="font-size:13px; margin-top:2px;">
+                      ${new Date(order.created_at).toLocaleDateString("en-PK", { year: "numeric", month: "short", day: "numeric" })}
+                    </div>
+                  </div>
+                  <span class="order-status ${statusClass(order.status)}">${order.status}</span>
+                </div>
+
+                <div>
+                  ${order.items.map(it => `
+                    <div class="order-item-row">
+                      <span>${it.product_name} <span class="muted">× ${it.quantity}</span></span>
+                      <span>${formatPKR(it.price * it.quantity)}</span>
+                    </div>
+                  `).join("")}
+                </div>
+
+                <div class="order-card-foot">
+                  <div>
+                    <span class="muted" style="font-size:13px;">${order.payment_method} · </span>
+                    <strong>${formatPKR(order.total_amount)}</strong>
+                  </div>
+                  ${isLatest && cancellable
+                    ? `<button class="btn btn-outline" style="border-color:#ef4444; color:#ef4444;" onclick="cancelOrder(${order.id})">Cancel Order</button>`
+                    : ""}
+                </div>
+              </div>`;
+          }).join("")}
+        </div>`;
+    }
+
+    async function loadOrders() {
+      if (!user) { renderSignInPrompt(); return; }
+      const userId = user.db_id;
+      if (!userId) { renderSignInPrompt(); return; }
+
+      renderLoading();
+
+      try {
+        const res = await fetch(`${API_BASE}/api/my_orders.php?user_id=${userId}`);
+        const data = await res.json();
+
+        if (data.success) {
+          renderOrders(data.orders || []);
+        } else {
+          renderError(data.error || "Orders fetch nahi ho sake.");
+        }
+      } catch (err) {
+        renderError("Backend se connect nahi ho saka. Internet check karo ya thodi der baad try karo.");
+      }
+    }
+
+    // ─── Sirf latest order cancel ho sakta hai (cancel_last) ───
+    async function cancelOrder(orderId) {
+      if (!confirm("Kya aap waqai apna yeh order cancel karna chahte ho?")) return;
+      const userId = user.db_id;
+
+      try {
+        const res = await fetch(`${API_BASE}/api/my_orders.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "cancel_last", user_id: userId })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          showToast(data.message || "Order cancel ho gaya");
+          loadOrders();
+        } else {
+          showToast(data.error || "Cancel nahi ho saka");
+        }
+      } catch (err) {
+        showToast("Backend se connect nahi ho saka");
+      }
+    }
+
+    loadOrders();
+  </script>
+  <script src="js/aura-bg.js"></script>
+</body>
+</html>

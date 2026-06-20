@@ -111,7 +111,8 @@ function renderNavbar(active = "") {
       </div>
       <div class="nav-actions">
         ${user
-          ? `<a href="#" id="logoutBtn" class="nav-user-btn" title="Logout">
+          ? `<a href="my-orders.html" class="nav-signin-btn" style="margin-right:8px;" title="My Orders">My Orders</a>
+             <a href="#" id="logoutBtn" class="nav-user-btn" title="Logout">
                <span class="nav-user-avatar">${user.name.charAt(0).toUpperCase()}</span>
                <span class="nav-user-name">${user.name.split(' ')[0]}</span>
              </a>`
