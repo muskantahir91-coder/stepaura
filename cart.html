@@ -148,7 +148,7 @@
       if (btn) { btn.disabled = true; btn.textContent = "Placing order..."; }
 
       try {
-        const res = await fetch("https://YOUR-BACKEND-NAME.up.railway.app/api/order.php", {
+        const res = await fetch("https://stepaura-backend-production.up.railway.app/api/order.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(orderData)
