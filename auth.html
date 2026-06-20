@@ -92,7 +92,7 @@
             </div>
             <div class="auth-field">
               <label>Phone Number</label>
-              <input required type="tel" name="phone" placeholder="+92 300 1234567" />
+              <input required type="tel" name="phone" placeholder="+92 300 1234567" maxlength="15" />
             </div>
             <div class="auth-field">
               <label>Delivery Address</label>
@@ -202,9 +202,16 @@
       const ops = ["+", "-", "×"];
       const op = ops[Math.floor(Math.random() * ops.length)];
       let a, b;
-      if (op === "+") { a = Math.floor(Math.random()*50)+5; b = Math.floor(Math.random()*50)+5; captchaResult = a+b; }
-      else if (op === "-") { a = Math.floor(Math.random()*50)+20; b = Math.floor(Math.random()*20)+1; captchaResult = a-b; }
-      else { a = Math.floor(Math.random()*10)+2; b = Math.floor(Math.random()*10)+2; captchaResult = a*b; }
+      // Dono numbers hamesha 1-10 ke beech (integer)
+      a = Math.floor(Math.random()*10)+1;
+      b = Math.floor(Math.random()*10)+1;
+      if (op === "+") { captchaResult = a+b; }
+      else if (op === "-") {
+        // Negative answer se bachne ke liye bada number pehle rakho
+        if (b > a) { const t = a; a = b; b = t; }
+        captchaResult = a-b;
+      }
+      else { captchaResult = a*b; }
       document.getElementById("captchaQuestion").textContent = `What is ${a} ${op} ${b}?`;
       document.getElementById("captchaAnswer").value = "";
       document.getElementById("captchaError").style.display = "none";
